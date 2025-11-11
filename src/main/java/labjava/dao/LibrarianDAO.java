@@ -6,12 +6,10 @@ import java.sql.*;
 public class LibrarianDAO extends DAO {
 
     public LibrarianDAO() {
-        super(); // mở kết nối từ lớp cha
+        super();
     }
 
-    /**
-     * Đăng nhập thủ thư: chỉ chọn các member có librarian_id khác NULL
-     */
+
     public Librarian findByLogin(String username, String passHash) {
         String sql = """
             SELECT librarian_id, username, email, phone, birth_date

@@ -11,9 +11,7 @@ public class BorrowSlipDAO extends DAO {
 
     public BorrowSlipDAO() { super(); }
 
-    /**
-     * Lấy các phiếu mượn (slips) đang hoạt động (status = 'borrowing')
-     */
+
     public List<BorrowSlip> getActiveBorrowSlips(int readerId) {
         List<BorrowSlip> list = new ArrayList<>();
 
@@ -32,7 +30,6 @@ public class BorrowSlipDAO extends DAO {
                     slip.setStatus(rs.getString("status"));
                     slip.setReaderId(rs.getInt("reader_id"));
 
-                    // SỬA Ở ĐÂY: Đã xóa dòng "slip.setLibrarianId(...)"
 
                     list.add(slip);
                 }

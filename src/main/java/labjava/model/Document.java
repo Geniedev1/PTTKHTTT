@@ -4,13 +4,12 @@ import java.util.Date;
 
 public class Document {
 
-    private int id; // ID của bản copy
-    private String title; // "maBanSao"
-    private String copyCondition; // "tinhTrang" (e.g., 'good', 'damaged', 'lost')
+    private int id;
+    private String title;
+    private String copyCondition;
     private Date dateRelease;
     private String langegue;
     private String discription;
-    // Mối quan hệ: Một bản copy thuộc về 1 Document
 
     // Constructors
     public Document() {

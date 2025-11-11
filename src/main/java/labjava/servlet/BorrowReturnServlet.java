@@ -61,17 +61,15 @@ public class BorrowReturnServlet extends HttpServlet {
             returnSlip.setTotalFine(totalFine);
             int success = returnSlipDAO.createReturnSlip(returnSlip);
 
-            if (success != -1) { // Nếu tạo phiếu thành công
+            if (success != -1) {
                 if (totalFine > 0) {
-                    // CÓ PHẠT: Chuyển đến trang thanh toán
-                    // Gửi kèm slipId và amount qua URL
+
                     response.sendRedirect("payment.jsp?slipId=" + success + "&amount=" + totalFine);
                 } else {
-                    // KHÔNG PHẠT: Chuyển về trang chủ
-                    response.sendRedirect("librarian_home.jsp?return=success"); // Sửa thành trang của bạn
+
+                    response.sendRedirect("librarian_home.jsp?return=success");
                 }
             } else {
-                // Nếu thất bại, báo lỗi
                 response.sendRedirect("returnslip_confirm.jsp?error=CreationFailed");
             }
 

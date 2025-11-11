@@ -11,7 +11,6 @@ public class DocumentBorrowDAO extends DAO {
 
     public DocumentBorrowDAO() { super(); }
 
-    // Hàm getOverdueFineRate() (lấy đơn giá phạt) giữ nguyên
     private double getOverdueFineRate() throws SQLException {
         String sql = "SELECT amount FROM tbl_fine WHERE fine_type = 'Late return' LIMIT 1";
         try (PreparedStatement ps = con.prepareStatement(sql);
@@ -20,13 +19,10 @@ public class DocumentBorrowDAO extends DAO {
                 return rs.getDouble("amount");
             }
         }
-        // Nếu không cài đặt, mặc định là 5000 (hoặc bạn có thể ném lỗi)
         return 5000.0;
     }
 
-    /**
-     * Sửa tên hàm: Lấy danh sách tài liệu mượn theo ID của Phiếu mượn
-     */
+
     public List<DocumentBorrow> getListBorrowedDocument(int borrowSlipId) {
         List<DocumentBorrow> list = new ArrayList<>();
         String sql = "SELECT " +
@@ -67,21 +63,18 @@ public class DocumentBorrowDAO extends DAO {
         }
         return list;
     }
-    /**
-     * Lấy thông tin chi tiết (đã join) của MỘT document_borrow
-     */
+
     public DocumentBorrow getBorrowedDocument(int documentBorrowId) {
-        // Query tương tự như getBorrowedDocumentsBySlipId, nhưng lọc theo db.id
         String sql = "SELECT " +
                 "  db.id AS borrow_id, c.copy_code, d.title, db.due_at, " +
                 "  DATEDIFF(CURDATE(), db.due_at) AS days_overdue " +
                 "FROM tbl_document_borrow db " +
                 "JOIN tbl_copy_of_document c ON db.copy_of_document_id = c.id " +
                 "JOIN tbl_document d ON c.document_id = d.id " +
-                "WHERE db.id = ?"; // Lọc theo ID của lần mượn
+                "WHERE db.id = ?";
 
         try {
-            double finePerDay = getOverdueFineRate(); // Giả sử bạn đã có hàm này
+            double finePerDay = getOverdueFineRate();
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, documentBorrowId);
 
@@ -111,7 +104,6 @@ public class DocumentBorrowDAO extends DAO {
         return null;
     }
     public double getDamageFineAmount() throws SQLException {
-        // Tên 'Damaged copy' dựa trên ảnh tbl_fine bạn đã gửi
         String sql = "SELECT amount FROM tbl_fine WHERE fine_type = 'Damaged copy' LIMIT 1";
 
         try (PreparedStatement ps = con.prepareStatement(sql);
@@ -120,10 +112,8 @@ public class DocumentBorrowDAO extends DAO {
                 return rs.getDouble("amount");
             }
         }
-        // Trả về giá trị mặc định nếu không tìm thấy,
-        // dựa trên ảnh CSDL của bạn
+
         return 50000.0;
     }
-    // Bạn cũng cần hàm getOverdueFineRate() này nếu chưa có
 
 }

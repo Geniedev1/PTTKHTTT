@@ -21,15 +21,12 @@ public class LibrarianServlet extends HttpServlet {
             return;
         }
 
-        // ✅ Lấy reader hiện tại trong session
         Reader current = (Reader) session.getAttribute("reader");
 
-        // ✅ Gọi DAO để lấy đầy đủ thông tin (JOIN name, address, ...)
         Reader fullInfo = new ReaderDAO().getFullInfoReader(current.getId());
         session.setAttribute("readerFull", fullInfo);
 
         System.out.println(fullInfo);
-        // ✅ Truyền sang JSP hiển thị
         req.setAttribute("readerFull", fullInfo);
         req.getRequestDispatcher("/ReaderCard.jsp").forward(req, resp);
     }
@@ -48,7 +45,6 @@ public class LibrarianServlet extends HttpServlet {
         Reader current = (Reader) session.getAttribute("reader");
         int readerId = current.getId();
 
-        // ✅ Gọi DAO để thêm thẻ bạn đọc
         ReaderCardDAO cardDAO = new ReaderCardDAO();
         ReaderCard readerCard = new ReaderCard();
         readerCard.setId(readerId);
@@ -60,7 +56,6 @@ public class LibrarianServlet extends HttpServlet {
             req.setAttribute("message", "❌ Lỗi khi tạo thẻ bạn đọc!");
         }
 
-        // ✅ Gọi lại doGet() để hiển thị lại thông tin và thông báo
         doGet(req, resp);
     }
 }

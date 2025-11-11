@@ -2,15 +2,11 @@
 package labjava.model;
 
 public class Reader extends Member {
-    private int id; // chính là tbl_reader.id
-
+    private int id;
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
-    // ... (bên trong lớp Reader)
 
-    /**
-     * Helper method để lấy họ tên đầy đủ
-     */
+
     public String getFullName() {
         if (this.getName() == null) {
             return "[Chưa có tên]";

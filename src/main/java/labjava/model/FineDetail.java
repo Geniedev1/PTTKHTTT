@@ -4,10 +4,9 @@ package labjava.model;
 
 public class FineDetail {
     private int id;
-    private int quantity; // "soLuong"
-    private Fine fine; // "loaiPhat"
+    private int quantity;
+    private Fine fine;
 
-    // Getters và Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

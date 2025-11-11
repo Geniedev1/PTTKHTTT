@@ -7,21 +7,16 @@ import java.sql.SQLException;
 
 public class FineDetailDAO extends DAO {
 
-    // Constructor mặc định
     public FineDetailDAO() {
         super();
     }
 
-    /**
-     * Constructor để dùng chung Connection
-     */
+
     public FineDetailDAO(Connection con) {
         this.con = con;
     }
 
-    /**
-     * Lấy ID của một loại phạt dựa trên tên (fine_type)
-     */
+
     public int getFineIdByType(String fineType) throws SQLException {
         String sql = "SELECT id FROM tbl_fine WHERE fine_type = ? LIMIT 1";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -32,7 +27,6 @@ public class FineDetailDAO extends DAO {
                 }
             }
         }
-        // Ném lỗi nếu không tìm thấy, để transaction có thể rollback
         throw new SQLException("Không tìm thấy fine_type trong CSDL: " + fineType);
     }
 

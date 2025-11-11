@@ -21,15 +21,12 @@ public class ReaderServlet extends HttpServlet {
             return;
         }
 
-        // ✅ Lấy reader hiện tại trong session
         Reader current = (Reader) session.getAttribute("reader");
 
-        // ✅ Gọi DAO để lấy đầy đủ thông tin (JOIN name, address, ...)
         Reader fullInfo = new ReaderDAO().getFullInfoReader(current.getId());
         session.setAttribute("readerFull", fullInfo);
 
         System.out.println(fullInfo);
-        // ✅ Truyền sang JSP hiển thị
         req.setAttribute("readerFull", fullInfo);
         req.getRequestDispatcher("/ReaderCard.jsp").forward(req, resp);
     }

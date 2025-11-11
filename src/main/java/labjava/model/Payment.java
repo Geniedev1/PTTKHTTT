@@ -4,13 +4,12 @@ import java.util.Date;
 
 public class Payment {
     private int id;
-    private String transactionCode; // maGiaoDich
-    private String method; // phuongThuc
-    private String status; // trangThai (pending, paid, failed)
-    private Date paidAt; // ngayThanhToan
-    private int returnSlipId; // Khóa ngoại đến ReturnSlip
+    private String transactionCode;
+    private String method;
+    private String status;
+    private Date paidAt;
+    private int returnSlipId;
 
-    // Getters và Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

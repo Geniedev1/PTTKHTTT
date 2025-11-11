@@ -8,20 +8,15 @@ import java.util.Date;
  */
 public class DocumentBorrow extends Document {
 
-    // Thông tin cơ bản
-    private int borrowId;       // id của tbl_document_borrow (để xử lý trả)
-    private String copyCode;      // Mã tài liệu (từ tbl_copy_of_document)
-    private String title;         // Tên tài liệu (từ tbl_document)
-    private Date dueDate;         // Hạn trả (từ tbl_document_borrow)
-
-    // Thông tin tính toán (logic)
-    private String overdueStatus;   // "Quá hạn" / "Đúng hạn"
-    private double provisionalFine; // Phí tạm tính (vnd)
-    // Constructors
+    private int borrowId;
+    private String copyCode;
+    private String title;
+    private Date dueDate;
+    private String overdueStatus;
+    private double provisionalFine;
     public DocumentBorrow() {
     }
 
-    // Getters và Setters
     public int getBorrowId() {
         return borrowId;
     }

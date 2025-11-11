@@ -6,10 +6,9 @@ public abstract class Member {
     private String email;
     private String birthDate;
     private String phone;
-    private Name name;       // có thể null
-    private Address address; // có thể null
+    private Name name;
+    private Address address;
 
-    // getters/setters chung
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
     public String getEmail() { return email; }

@@ -13,10 +13,7 @@ public class ReaderCardDAO extends DAO {
         super();
     }
 
-    /**
-     * Thêm bản ghi thẻ bạn đọc mới
-     * @return true nếu insert thành công
-     */
+
     public boolean CreateReaderCard(ReaderCard rc) {
         String sql = "INSERT INTO tbl_reader_card (reader_id, statusCard) VALUES (?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {

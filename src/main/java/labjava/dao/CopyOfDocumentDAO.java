@@ -12,7 +12,6 @@ public class CopyOfDocumentDAO extends DAO {
         super();
     }
     public boolean updateStatus(CopyOfDocument copyd) throws SQLException {
-        // "tinhTrang" trong UML của bạn là "copy_condition" trong CSDL
         int id = 0;
         String sql1 = "SELECT c.id " +
                 "FROM tbl_copy_of_document c " +

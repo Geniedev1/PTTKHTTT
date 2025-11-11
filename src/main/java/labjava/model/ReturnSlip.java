@@ -2,7 +2,6 @@ package labjava.model;
 
 import java.util.List;
 
-// (Bạn cần import các model Reader, Librarian, DocumentReturn, FineDetail)
 
 public class ReturnSlip {
     private int id;
@@ -12,7 +11,6 @@ public class ReturnSlip {
     private List<DocumentReturn> documentReturns;
     private List<FineDetail> fineDetails;
 
-    // Getters và Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

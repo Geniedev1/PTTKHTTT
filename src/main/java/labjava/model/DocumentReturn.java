@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class DocumentReturn {
     private int id;
-    private Date returnedAt; // "ngayTra"
-    private String documentBorrowId; // Khóa ngoại đến tbl_document_borrow
+    private Date returnedAt;
+    private String documentBorrowId;
 
     // Getters và Setters
     public int getId() { return id; }

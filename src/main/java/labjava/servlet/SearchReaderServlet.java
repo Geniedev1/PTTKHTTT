@@ -11,20 +11,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Servlet này xử lý việc tìm kiếm và hiển thị danh sách bạn đọc.
- * Chúng ta sẽ map nó với URL ví dụ: /return-search
- */
+
 public class SearchReaderServlet extends HttpServlet {
 
-    /**
-     * doGet sẽ xử lý cả việc tải trang ban đầu và việc tìm kiếm
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        // 1. Lấy tham số tìm kiếm từ form
         String searchCode = request.getParameter("searchCode");
 
         ReaderDAO readerDAO = new ReaderDAO();
@@ -51,9 +45,7 @@ public class SearchReaderServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    /**
-     * Nếu form dùng method="POST", chúng ta chỉ cần gọi doGet
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Chuyển toàn bộ xử lý sang doGet

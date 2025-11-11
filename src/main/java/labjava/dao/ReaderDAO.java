@@ -16,12 +16,12 @@ import java.util.Map;
 public class ReaderDAO extends DAO {
 
     public ReaderDAO() {
-        super(); // mở kết nối từ lớp cha DAO
+        super();
     }
 
 
     public boolean insert(Reader r) {
-        String sqlReader = "INSERT INTO tbl_reader() VALUES()"; // chỉ tạo id (auto_increment)
+        String sqlReader = "INSERT INTO tbl_reader() VALUES()";
         String sqlMember = "INSERT INTO tbl_member(username, password_hash, email, birth_date, phone, reader_id) VALUES(?,?,?,?,?,?)";
 
         try {
@@ -68,12 +68,11 @@ public class ReaderDAO extends DAO {
     }
 
 
-    // Trả về Reader hoặc Librarian (đều extends Member)
     public Reader findByLogin(String username, String passHash) {
         String sql = "SELECT id, username, email, phone, birth_date,reader_id,librarian_id FROM tbl_member WHERE username=? AND password_hash=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, username);
-            ps.setString(2, passHash); // nếu dùng BCrypt: đổi sang SELECT theo username rồi check BCrypt trong Java
+            ps.setString(2, passHash);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Reader r = new Reader();
@@ -112,7 +111,6 @@ public class ReaderDAO extends DAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) return null;
 
-                // Pack Name
                 Name name = null;
                 Integer nId = (Integer) rs.getObject("n_id");
                 if (nId != null) {
@@ -123,7 +121,6 @@ public class ReaderDAO extends DAO {
                     name.setMiddleName(rs.getString("n_middle_name"));
                 }
 
-                // Pack Address
                 Address addr = null;
                 Integer aId = (Integer) rs.getObject("a_id");
                 if (aId != null) {
@@ -138,7 +135,6 @@ public class ReaderDAO extends DAO {
                     addr.setDescription(rs.getString("a_description"));
                 }
 
-                // Map Reader
                 Reader r = new Reader();
                 r.setId(rs.getInt("r_id"));                  // ✅ Reader.id = tbl_reader.id
                 r.setUsername(rs.getString("m_username"));
@@ -155,25 +151,19 @@ public class ReaderDAO extends DAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return null;
     }
-// ... (các import khác
 
-    // ... (Câu query BASE_READER_INFO_QUERY giữ nguyên)
     public List<Map<String, Object>> getAllReader() {
 
-        // Bước 1: Lấy danh sách các đối tượng Reader CƠ BẢN
         List<Reader> readerList = getBasicReaders();
 
-        // Đây là danh sách Map chúng ta sẽ trả về
         List<Map<String, Object>> resultList = new ArrayList<>();
 
-        // Bước 2: Lặp qua danh sách Reader
         for (Reader reader : readerList) {
 
-            // Bước 3: Lấy thông tin bổ sung
+            //
             int count = getBorrowedCountForReader(reader.getId());
             double debt = getFineDebtForReader(reader.getId());
 
-            // Bước 4: Chuyển đổi (Reader + Thông tin phụ) -> Map
             Map<String, Object> map = convertReaderToMap(reader, count, debt);
             resultList.add(map);
         }
@@ -181,18 +171,13 @@ public class ReaderDAO extends DAO {
         return resultList;
     }
 
-    /**
-     * Hàm 2 (Public): Tìm kiếm bạn đọc (Đúng thiết kế)
-     * Vẫn trả về List<Map> để không ảnh hưởng Servlet/JSP.
-     */
+
     public List<Map<String, Object>> searchReader(String readerCode) {
 
-        // Bước 1: Lấy danh sách đối tượng Reader CƠ BẢN (đã lọc)
         List<Reader> readerList = getBasicReadersByCode(readerCode);
 
         List<Map<String, Object>> resultList = new ArrayList<>();
 
-        // Bước 2, 3, 4: Lặp, lấy chi tiết, và chuyển đổi
         for (Reader reader : readerList) {
             int count = getBorrowedCountForReader(reader.getId());
             double debt = getFineDebtForReader(reader.getId());
@@ -205,13 +190,7 @@ public class ReaderDAO extends DAO {
     }
 
 
-    // ===================================================================
-    // HÀM PHỤ (PRIVATE) ĐỂ TÁCH NHỎ LOGIC
-    // ===================================================================
 
-    /**
-     * [Phụ 1] Lấy danh sách ĐỐI TƯỢNG Reader cơ bản
-     */
     private List<Reader> getBasicReaders() {
         List<Reader> list = new ArrayList<>();
         String sql = "SELECT r.id, m.username, n.surname, n.middle_name, n.given_name " +
@@ -231,9 +210,7 @@ public class ReaderDAO extends DAO {
         return list;
     }
 
-    /**
-     * [Phụ 2] Lấy danh sách ĐỐI TƯỢNG Reader cơ bản (Lọc theo Code)
-     */
+
     private List<Reader> getBasicReadersByCode(String readerCode) {
         List<Reader> list = new ArrayList<>();
         String sql = "SELECT r.id, m.username, n.surname, n.middle_name, n.given_name " +
@@ -255,9 +232,7 @@ public class ReaderDAO extends DAO {
         return list;
     }
 
-    /**
-     * [Phụ 3] Helper: Map 1 hàng RS sang 1 đối tượng Reader (cơ bản)
-     */
+
     private Reader mapResultSetToBasicReader(ResultSet rs) throws SQLException {
         Reader r = new Reader();
         r.setId(rs.getInt("id"));
@@ -274,9 +249,7 @@ public class ReaderDAO extends DAO {
         return r;
     }
 
-    /**
-     * [Phụ 4] Helper: Chuyển đổi Reader -> Map (cho JSP)
-     */
+
     private Map<String, Object> convertReaderToMap(Reader reader, int count, double debt) {
         Map<String, Object> map = new HashMap<>();
 
@@ -294,9 +267,7 @@ public class ReaderDAO extends DAO {
         return map;
     }
 
-    /**
-     * [Phụ 5] Lấy số sách đang mượn (Giữ nguyên)
-     */
+
     private int getBorrowedCountForReader(int readerId) {
         String sql = "SELECT COUNT(db.id) " +
                 "FROM tbl_document_borrow db " +
@@ -311,9 +282,7 @@ public class ReaderDAO extends DAO {
         return 0;
     }
 
-    /**
-     * [Phụ 6] Lấy nợ phạt (tính động) (Giữ nguyên)
-     */
+
     private double getFineDebtForReader(int readerId) {
         String sql = "SELECT COALESCE(SUM( DATEDIFF(CURDATE(), db.due_at) * fine.amount ), 0) " +
                 "FROM tbl_document_borrow db " +

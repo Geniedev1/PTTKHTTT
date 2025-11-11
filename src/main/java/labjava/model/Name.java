@@ -2,9 +2,9 @@ package labjava.model;
 
 public class Name {
     private int id;
-    private String givenName;   // tên
-    private String surname;     // họ
-    private String middleName;  // tên đệm
+    private String givenName;
+    private String surname;
+    private String middleName;
 
     public Name() {}
 
@@ -15,7 +15,6 @@ public class Name {
         this.middleName = middleName;
     }
 
-    // getters/setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getGivenName() { return givenName; }

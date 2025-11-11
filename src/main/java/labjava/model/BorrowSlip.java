@@ -11,10 +11,8 @@ public class BorrowSlip {
     private String status; // Đổi từ "trangThai"
     private Date createdAt;
 
-    // Danh sách các mục mượn con (theo sơ đồ UML)
-    private List<DocumentBorrow> documentBorrows; // Đổi tên
+    private List<DocumentBorrow> documentBorrows;
 
-    // Getters và Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

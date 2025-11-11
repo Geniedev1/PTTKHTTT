@@ -1,8 +1,7 @@
 package labjava.servlet;
 import labjava.dao.ReaderDAO;
-import labjava.dao.UserDAO;
 import labjava.model.Reader;
-import labjava.model.User;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
